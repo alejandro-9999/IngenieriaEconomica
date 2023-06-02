@@ -1,4 +1,4 @@
-import React from 'react';
+import 'katex/dist/katex.min.css';
 import Layout from './components/Layout';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
