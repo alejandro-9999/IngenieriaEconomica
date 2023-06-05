@@ -36,7 +36,7 @@ const AmortizationView: React.FC = () => {
     const calculateAmortizationTable = () => {
         const { presentValue, interestRate, time, periods } = formValues;
         const n = periods > 0 ? periods : time * 12;
-        const r = time > 0 ? (interestRate / 100) / 12 : (interestRate / 100);
+        const r = interestRate / 100;
 
         let payment = (presentValue * r) / (1 - Math.pow(1 + r, -n));
 
