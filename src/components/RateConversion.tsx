@@ -1,17 +1,21 @@
-import { Button, Grid, TextField, Typography } from '@mui/material';
+import { Button, Divider, Grid, MenuItem, Select, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 
 function RateConversion() {
   const [tasaNominal, setTasaNominal] = useState('');
   const [tasaEfectiva, setTasaEfectiva] = useState('');
-  const [periodoNominal, setPeriodoNominal] = useState('');
-  const [periodoEfectivo, setPeriodoEfectivo] = useState('');
+  const [periodoNominal, setPeriodoNominal] = useState('12');
+  const [periodoEfectivo, setPeriodoEfectivo] = useState('12');
 
   const convertirAEfectiva = () => {
+    console.log(tasaNominal, periodoNominal, periodoEfectivo);
+
+
     const tasa = parseFloat(tasaNominal);
     const periodoNom = parseInt(periodoNominal);
     const periodoEfec = parseInt(periodoEfectivo);
-    const tasaEfec = Math.pow(1 + tasa / periodoNom, periodoNom / periodoEfec) - 1;
+    const conversion_efectiva = (tasa / 100) / periodoNom;
+    const tasaEfec = (Math.pow(1 + conversion_efectiva, periodoNom / periodoEfec) - 1) * 100;
     setTasaEfectiva(tasaEfec.toFixed(4));
   };
 
@@ -19,7 +23,7 @@ function RateConversion() {
     const tasa = parseFloat(tasaEfectiva);
     const periodoNom = parseInt(periodoNominal);
     const periodoEfec = parseInt(periodoEfectivo);
-    const tasaNom = (Math.pow(1 + tasa, periodoEfec / periodoNom) - 1) * periodoNom;
+    const tasaNom = ((Math.pow(1 + (tasa / 100), periodoEfec / periodoNom) - 1) * periodoNom) * 100;
     setTasaNominal(tasaNom.toFixed(4));
   };
 
@@ -28,48 +32,82 @@ function RateConversion() {
       <Typography variant="h2" gutterBottom>
         Conversión de tasas
       </Typography>
-      <Grid container item spacing={2} alignItems="center">
-        <Grid item>
-          <Typography>Tasa nominal:</Typography>
+      <Grid spacing={2}>
+        <Grid container item spacing={2} mb={2} alignItems="center">
+          <Grid item>
+            <Typography>Tasa nominal:</Typography>
+          </Grid>
+          <Grid item>
+            <TextField
+              type="number"
+              value={tasaNominal}
+              onChange={(e) => setTasaNominal(e.target.value)}
+            />
+          </Grid>
+          <Grid item>
+            <Typography>Periodo nominal:</Typography>
+          </Grid>
+          <Grid item>
+            {/* <TextField
+              type="number"
+              value={periodoNominal}
+              onChange={(e) => setPeriodoNominal(e.target.value)}
+            /> */}
+
+
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={periodoNominal}
+              label="Age"
+              onChange={(e) => setPeriodoNominal(e.target.value)}
+            >
+              <MenuItem value={12}>Mensual</MenuItem>
+              <MenuItem value={6}>Bimestral</MenuItem>
+              <MenuItem value={4}>Trimestral</MenuItem>
+              <MenuItem value={3}>Cuatrimestral</MenuItem>
+              <MenuItem value={2}>Semestral</MenuItem>
+              <MenuItem value={1}>Anual</MenuItem>
+            </Select>
+          </Grid>
         </Grid>
-        <Grid item>
-          <TextField
-            type="number"
-            value={tasaNominal}
-            onChange={(e) => setTasaNominal(e.target.value)}
-          />
-        </Grid>
-        <Grid item>
-          <Typography>Periodo nominal:</Typography>
-        </Grid>
-        <Grid item>
-          <TextField
-            type="number"
-            value={periodoNominal}
-            onChange={(e) => setPeriodoNominal(e.target.value)}
-          />
-        </Grid>
-      </Grid>
-      <Grid container item spacing={2} alignItems="center">
-        <Grid item>
-          <Typography>Tasa efectiva:</Typography>
-        </Grid>
-        <Grid item>
-          <TextField
-            type="number"
-            value={tasaEfectiva}
-            onChange={(e) => setTasaEfectiva(e.target.value)}
-          />
-        </Grid>
-        <Grid item>
-          <Typography>Periodo efectivo:</Typography>
-        </Grid>
-        <Grid item>
-          <TextField
+
+        <Grid container item spacing={2} alignItems="center">
+          <Grid item>
+            <Typography>Tasa efectiva:</Typography>
+          </Grid>
+          <Grid item>
+            <TextField
+              type="number"
+              value={tasaEfectiva}
+              onChange={(e) => setTasaEfectiva(e.target.value)}
+            />
+
+          </Grid>
+          <Grid item>
+            <Typography>Periodo efectivo:</Typography>
+          </Grid>
+          <Grid item>
+            {/* <TextField
             type="number"
             value={periodoEfectivo}
             onChange={(e) => setPeriodoEfectivo(e.target.value)}
-          />
+          /> */}
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={periodoEfectivo}
+              label="Age"
+              onChange={(e) => setPeriodoEfectivo(e.target.value)}
+            >
+              <MenuItem value={12}>Mensual</MenuItem>
+              <MenuItem value={6}>Bimestral</MenuItem>
+              <MenuItem value={4}>Trimestral</MenuItem>
+              <MenuItem value={3}>Cuatrimestral</MenuItem>
+              <MenuItem value={2}>Semestral</MenuItem>
+              <MenuItem value={1}>Anual</MenuItem>
+            </Select>
+          </Grid>
         </Grid>
       </Grid>
       <Grid container item spacing={2} alignItems="center" mt={2}>
