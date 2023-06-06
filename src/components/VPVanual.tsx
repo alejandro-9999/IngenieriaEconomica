@@ -4,7 +4,7 @@ import Latex from 'react-latex-next';
 
 function VPVanual() {
 
-    const formula = `VP = A \\cdot \\left[  \\frac{1 - (1 + i)^{-n}}{i} \\right]`;
+    const formula = `A \\frac{VP}{\\left[  \\frac{1 - (1 + i)^{-n}}{i} \\right]}`;
 
 
 
@@ -24,7 +24,7 @@ function VPVanual() {
 
     const calculate = () => {
         const decimalInterestRate = interestRate / 100;
-        const A = (principal * (1 - Math.pow(1 + decimalInterestRate, -compoundingPeriods))) / decimalInterestRate;
+        const A = principal/(((1 - Math.pow(1 + decimalInterestRate, -compoundingPeriods))) / decimalInterestRate);
         setResult(parseFloat(A.toFixed(2)));
     }
 
@@ -36,7 +36,7 @@ function VPVanual() {
 
     useEffect(() => {
       
-        const new_formule = `${fomuleValidator(result,'VP')} = ${fomuleValidator(principal,'A')} \\cdot \\left[  \\frac{1-(1 + ${fomuleValidator(interestRate/100,'i')})^{-${fomuleValidator(compoundingPeriods,'n')}}}{${fomuleValidator(interestRate/100,'i')}} \\right]`;
+        const new_formule = `${fomuleValidator(result,'A')} =  \\frac{${fomuleValidator(principal,'VP')}}{\\left[  \\frac{1-(1 + ${fomuleValidator(interestRate/100,'i')})^{-${fomuleValidator(compoundingPeriods,'n')}}}{${fomuleValidator(interestRate/100,'i')}} \\right]}`;
 
         setOutForm(new_formule);
     }, [compoundingPeriods, interestRate, principal, result, ]);
@@ -46,7 +46,7 @@ function VPVanual() {
     useEffect(() => {
         const decimalInterestRate = interestRate / 100;
 
-        const A = (principal * (1 - Math.pow(1 + decimalInterestRate, -compoundingPeriods))) / decimalInterestRate;
+        const A = principal/(((1 - Math.pow(1 + decimalInterestRate, -compoundingPeriods))) / decimalInterestRate);
 
         setResult(parseFloat(A.toFixed(2)));
     }, [compoundingPeriods, interestRate, principal]);
@@ -79,7 +79,7 @@ function VPVanual() {
                     <Grid item xs={12} md={6}>
                         <TextField
                             id="principal"
-                            label="Monto(A)"
+                            label="Monto(VP)"
                             type="number"
                             value={principal}
                             onChange={(event) => changeValues(event.target.value, setPrincipal)}

@@ -4,7 +4,7 @@ import Latex from 'react-latex-next';
 
 function VFAanual() {
 
-    const formula = `VP = A \\cdot \\left[  \\frac{(1 + i)^n - 1}{i} \\right]\\left( 1 + i \\right)`;
+    const formula = `A = \\frac {VP}{\\left[  \\frac{(1 + i)^n - 1}{i} \\right]\\left( 1 + i \\right)}`;
 
 
 
@@ -24,7 +24,7 @@ function VFAanual() {
 
     const calculate = () => {
         const decimalInterestRate = interestRate / 100;
-        const A = ((principal * (Math.pow(1 + decimalInterestRate, compoundingPeriods) - 1)) / decimalInterestRate)*(1 + decimalInterestRate);
+        const A =  principal/((( (Math.pow(1 + decimalInterestRate, compoundingPeriods) - 1)) / decimalInterestRate)*(1 + decimalInterestRate));
         setResult(parseFloat(A.toFixed(2)));
     }
 
@@ -36,7 +36,7 @@ function VFAanual() {
 
     useEffect(() => {
       
-        const new_formule = `${fomuleValidator(result,'VP')} = ${fomuleValidator(principal,'A')} \\cdot \\left[  \\frac{(1 + ${fomuleValidator(interestRate/100,'i')})^{${fomuleValidator(compoundingPeriods,'n')}} - 1}{${fomuleValidator(interestRate/100,'i')}} \\right]\\left( 1 + ${fomuleValidator(interestRate/100,'i')} \\right)`;
+        const new_formule = `${fomuleValidator(result,'A')}  = \\frac{${fomuleValidator(principal,'VP')}}{\\left[  \\frac{(1 + ${fomuleValidator(interestRate/100,'i')})^{${fomuleValidator(compoundingPeriods,'n')}} - 1}{${fomuleValidator(interestRate/100,'i')}} \\right]\\left( 1 + ${fomuleValidator(interestRate/100,'i')} \\right)}`;
 
         setOutForm(new_formule);
     }, [compoundingPeriods, interestRate, principal, result, ]);
@@ -46,7 +46,7 @@ function VFAanual() {
     useEffect(() => {
         const decimalInterestRate = interestRate / 100;
 
-        const A = ((principal * (Math.pow(1 + decimalInterestRate, compoundingPeriods) - 1)) / decimalInterestRate)*(1 + decimalInterestRate);
+        const A =  principal/((( (Math.pow(1 + decimalInterestRate, compoundingPeriods) - 1)) / decimalInterestRate)*(1 + decimalInterestRate));
 
         setResult(parseFloat(A.toFixed(2)));
     }, [compoundingPeriods, interestRate, principal]);
@@ -79,7 +79,7 @@ function VFAanual() {
                     <Grid item xs={12} md={6}>
                         <TextField
                             id="principal"
-                            label="Monto(A)"
+                            label="Monto(VF)"
                             type="number"
                             value={principal}
                             onChange={(event) => changeValues(event.target.value, setPrincipal)}
